@@ -10,7 +10,7 @@ const config = require("./config/key");
 // Api docs
 const YAML = require('yamljs');
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = YAML.load('./server/docs/docs.yaml');
+const swaggerDocument = YAML.load('./docs/docs.yaml');
 const options = {
   customCss: '.swagger-ui .topbar { display: none }',
   customSiteTitle: "Renting",
