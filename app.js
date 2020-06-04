@@ -25,8 +25,7 @@ mongoose.connect(config.mongoURI,
   .then(() => console.log('MongoDB Connected...'))
   .catch(err => console.log(err));
 
-app.use(cors())
-
+app.use(cors());
 //to not get any deprecation warning or error
 //support parsing of application/x-www-form-urlencoded post data
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -40,7 +39,9 @@ app.use('/api/product', require('./routes/product'));
 //use this to show the image you have in node js server to client (react js)
 //https://stackoverflow.com/questions/48914987/send-image-path-from-node-js-express-server-to-react-client
 app.use('/uploads', express.static('uploads'));
-
+app.get('/', function (req, res) {
+  res.send('We are at server')
+})
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production") {
 
@@ -53,7 +54,4 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.resolve(__dirname, "../client", "build", "index.html"));
   });
 }
-app.get('/', function (req, res) {
-  res.send('We are at server')
-})
 module.exports = app;
