@@ -34,7 +34,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // support parsing of application/json type post data
 app.use(bodyParser.json());
 app.use(cookieParser());
-// app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options, express.static('docs')));
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options, express.static('docs')));
 app.use('/api/users', require('./routes/users'));
 app.use('/api/product', require('./routes/product'));
 //use this to show the image you have in node js server to client (react js)

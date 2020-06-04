@@ -22,7 +22,9 @@ var upload=multer({storage:storage}).single("file")
 //=================================
 //             Product
 //=================================
-
+router.get("/",(req,res) =>{
+    res.json("at product")
+})
 router.post("/uploadImage", auth, (req, res) => {
     upload(req,res,err=>{
         if(err) return res.json({success:false,err})
