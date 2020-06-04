@@ -5,6 +5,7 @@ const cors = require('cors')
 
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+
 const config = require("./config/key");
 
 // Api docs
@@ -16,13 +17,6 @@ const options = {
   customSiteTitle: "Renting",
   customfavIcon: "/docs/rent.png"
 };
-app.use('/docs', express.static('docs'));
-
-// const mongoose = require("mongoose");
-// mongoose
-//   .connect(config.mongoURI, { useNewUrlParser: true })
-//   .then(() => console.log("DB connected"))
-//   .catch(err => console.error(err));
 
 const mongoose = require("mongoose");
 const connect = mongoose.connect(config.mongoURI,
@@ -42,6 +36,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // support parsing of application/json type post data
 app.use(bodyParser.json());
 app.use(cookieParser());
+app.use('/docs', express.static('docs'));
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
 app.use('/api/users', require('./routes/users'));
 app.use('/api/product', require('./routes/product'));
