@@ -7,7 +7,9 @@ const { auth } = require("../middleware/auth");
 //=================================
 //             User
 //=================================
-
+router.get("/",(req,res) =>{
+    res.json("get nha");
+})
 router.get("/auth", auth, (req, res) => {
     res.status(200).json({
         _id: req.user._id,
