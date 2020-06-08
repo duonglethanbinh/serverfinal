@@ -1,0 +1,231 @@
+swagger: "2.0"
+info:
+  description: This is Docs for Renting System Service.<br>There are some basic CRUD for a user who communicates with the server by making a request.<br>To make some Product resquest, you have to login in the User area first. Only log out when you finish your testing.<br>This is a API Docs written by .yaml.
+  version: 1.0.0
+  title: Renting System Documentation
+  contact:
+    email: 17520279@gm.uit.edu.vn
+    name: Dương Lê Thanh Bình and Trần Hoàng Long
+  host: "http://localhost:5000"
+paths:
+  "/api/users/register":
+    post:
+      tags:
+        - "User"
+      summary: "Create user"
+      description: "This can only be done by the logged in user. Please enter your personal infomation."
+      produces:
+        - application/json
+      parameters:
+        - name: "name"
+          in: "formData"
+          description: "The user name for register"
+          required: true
+          type: "string"
+        - name: "email"
+          in: "formData"
+          description: "The user email for register"
+          required: true
+          type: "string"
+        - name: "password"
+          in: "formData"
+          description: "The user password for register"
+          required: true
+          type: "string"
+        - name: "lastname"
+          in: "formData"
+          description: "The user lastname for register"
+          required: true
+          type: "string"
+        - name: "role"
+          in: "formData"
+          description: "The user lastname for register"
+          required: true
+          type: "integer"
+        - name: "image"
+          in: "formData"
+          description: "The user image for register"
+          required: true
+          type: "string"
+      responses:
+        default:
+          description: "Successful"
+  "/api/users/login":
+    post:
+      tags:
+        - "User"
+      summary: "Logs user into the system. After that please request auth."
+      description: "After login, please make request /api/users/auth for confirm your login action"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "email"
+          in: "formData"
+          description: "The user name for login"
+          required: true
+          type: "string"
+        - name: "password"
+          in: "formData"
+          description: "The password for login in clear text"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+  "/api/users/auth":
+    get:
+      tags:
+        - "User"
+      summary: "After authenfication, get data back from server."
+      description: "You only try this after make Login request. By make get auth request you will available to access the Product area"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Get back unique data of user"
+  "/api/users/addToCart":
+    post:
+      tags:
+        - "User"
+      summary: "Add to cart user selected product"
+      description: "To add to card you need the Id of user and product as well. Fill in to the blank and make a request."
+      produces:
+        - "application/json"
+      parameters:
+        - name: "_id"
+          in: "query"
+          description: "You need to enter your ID user for adding card action."
+          required: true
+          type: "string" 
+        - name: "productId"
+          in: "query"
+          description: "You need to enter ID od product for add the product to card."
+          required: true
+          type: "string" 
+      responses:
+        "200":
+          description: "successful operation"
+  # "/api/users/removeFromCart":
+  #   get:
+  #     tags:
+  #       - "User"
+  #     summary: "Remove to from cart which selected by user"
+  #     description: "To remove to card you need the Id of user and product as well. Fill in to the blank and make a request."
+  #     produces:
+  #       - "application/json"
+  #     parameters:
+  #       - name: "_id"
+  #         in: "query"
+  #         description: "You need to enter your ID user for adding card action."
+  #         required: true
+  #         type: "string" 
+  #       - name: "id"
+  #         in: "query"
+  #         description: "You need to enter ID od product for add the product to card."
+  #         required: true
+  #         type: "string" 
+  #     responses:
+  #       "200":
+  #         description: "successful operation"
+  "/api/users/userCartInfo":
+    get:
+      tags:
+        - "User"
+      summary: "Get User cart information"
+      description: "To get the card info of collected product, we sent this request to server. The response will show the list of product in card."
+      produces:
+        - "application/json"
+      parameters:
+        - name: "_id"
+          in: "query"
+          description: "You need to enter your ID user for searching the user product card."
+          required: true
+          type: "string"      
+      responses:
+        "200":
+          description: "successful operation"
+  "/api/users/getHistory":
+    get:
+      tags:
+        - "User"
+      summary: "Get User cart history"
+      description: "To get the history of the product in cart which the user click for buying"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "_id"
+          in: "query"
+          description: "You need to enter your ID user for searching the user history product card."
+          required: true
+          type: "string"      
+      responses:
+        "200":
+          description: "successful operation"
+  "/api/users/logout":
+    get:
+      tags:
+        - "User"
+      summary: "Logout from system"
+      description: "After you log out you aren't able to make request in Product area"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Get json data: success: true"
+  "/api/product/uploadProduct":
+    post:
+      tags:
+        - "Product"
+      summary: "Upload new prodcut to system (Please make login and auth request before test this one) "
+      description: "Provide some information like: title, description, price, images, devices, sold, views"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "title"
+          in: "formData"
+          description: "The title of new product"
+          required: true
+          type: "string"
+        - name: "description"
+          in: "formData"
+          description: "The description of new product"
+          required: true
+          type: "string"
+        - name: "price"
+          in: "formData"
+          description: "The price of new product"
+          required: true
+          type: "integer"
+        - name: "images"
+          in: "formData"
+          description: "The images of new product"
+          required: true
+          type: "string"
+        - name: "devices"
+          in: "formData"
+          description: "The devices of new product"
+          required: true
+          type: "integer"
+        - name: "sold"
+          in: "formData"
+          description: "The sold of new product"
+          required: true
+          type: "integer"
+        - name: "views"
+          in: "formData"
+          description: "The views of new product"
+          required: true
+          type: "integer"
+      responses:
+        "200":
+          description: "Json file: {success: true}"
+  "/api/product/getProducts":
+    post:
+      tags:
+        - "Product"
+      summary: "Get all product from the database."
+      description: "You dont need to make auth request for this one."
+      responses:
+        "200":
+          description: "Get json data of product data"
+  

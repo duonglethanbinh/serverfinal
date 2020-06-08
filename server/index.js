@@ -1,31 +1,30 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const cors = require('cors');
+const cors = require('cors')
+
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const config = require("./config/key");
 
-// Api docs
 const YAML = require('yamljs');
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = YAML.load('./docs/docs.yaml');
+const swaggerDocument = YAML.load('./server/docs/docs.yaml');
 const options = {
   customCss: '.swagger-ui .topbar { display: none }',
   customSiteTitle: "Renting",
-  customfavIcon: "/docs/rent.png"
+  customfavIcon: "https://www.flaticon.com/free-icon/for-rent_505068?term=rents&page=1&position=47"
 };
-
 const mongoose = require("mongoose");
-mongoose.connect(config.mongoURI,
+const connect = mongoose.connect(config.mongoURI,
   {
     useNewUrlParser: true, useUnifiedTopology: true,
     useCreateIndex: true, useFindAndModify: false
   })
   .then(() => console.log('MongoDB Connected...'))
   .catch(err => console.log(err));
+app.use(cors())
 
-app.use(cors());
 //to not get any deprecation warning or error
 //support parsing of application/x-www-form-urlencoded post data
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,15 +32,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // support parsing of application/json type post data
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options, express.static('docs')));
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, options));
 app.use('/api/users', require('./routes/users'));
 app.use('/api/product', require('./routes/product'));
+
 //use this to show the image you have in node js server to client (react js)
 //https://stackoverflow.com/questions/48914987/send-image-path-from-node-js-express-server-to-react-client
 app.use('/uploads', express.static('uploads'));
-app.get('/', function (req, res) {
-  res.send('We are at server')
-})
+
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production") {
 
@@ -54,4 +52,10 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.resolve(__dirname, "../client", "build", "index.html"));
   });
 }
-module.exports = app;
+app.get('/', function (req, res) {
+  res.send('We are at server')
+})
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+  console.log(`Server Listening on ${port}`)
+});
