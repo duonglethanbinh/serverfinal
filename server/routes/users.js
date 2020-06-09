@@ -56,7 +56,7 @@ router.post("/login", (req, res) => {
                     .status(200)
                     .json({
                         loginSuccess: true, userId: user._id,
-                        w_auth: user.token
+                        w_auth: user.token, w_authExp: user.tokenExp
                     });
             });
         });
