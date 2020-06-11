@@ -99,7 +99,7 @@ paths:
           type: "string" 
         - name: "productId"
           in: "query"
-          description: "You need to enter ID od product for add the product to card."
+          description: "You need to enter ID of product for add the product to card."
           required: true
           type: "string" 
       responses:
@@ -144,23 +144,23 @@ paths:
       responses:
         "200":
           description: "successful operation"
-  "/api/users/getHistory":
-    get:
-      tags:
-        - "User"
-      summary: "Get User cart history"
-      description: "To get the history of the product in cart which the user click for buying"
-      produces:
-        - "application/json"
-      parameters:
-        - name: "_id"
-          in: "query"
-          description: "You need to enter your ID user for searching the user history product card."
-          required: true
-          type: "string"      
-      responses:
-        "200":
-          description: "successful operation"
+  # "/api/users/getHistory":
+  #   get:
+  #     tags:
+  #       - "User"
+  #     summary: "Get User cart history"
+  #     description: "To get the history of the product in cart which the user click for buying"
+  #     produces:
+  #       - "application/json"
+  #     parameters:
+  #       - name: "_id"
+  #         in: "query"
+  #         description: "You need to enter your ID user for searching the user history product card."
+  #         required: true
+  #         type: "string"      
+  #     responses:
+  #       "200":
+  #         description: "successful operation"
   "/api/users/logout":
     get:
       tags:
